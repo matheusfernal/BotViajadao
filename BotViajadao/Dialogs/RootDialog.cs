@@ -1,31 +1,54 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Connector;
+using Microsoft.Bot.Builder.Luis.Models;
 
 namespace BotViajadao.Dialogs
 {
     [Serializable]
-    public class RootDialog : IDialog<object>
+    public class RootDialog : LuisDialog<object>
     {
-        public Task StartAsync(IDialogContext context)
+        [LuisIntent("Recomendar restaurantes")]
+        public async Task RecomendarRestaurantesAsync(IDialogContext context, LuisResult result)
         {
-            context.Wait(MessageReceivedAsync);
-
-            return Task.CompletedTask;
+            await context.PostAsync("Recomendar restaurantes");
+            context.Done<string>(null);
         }
 
-        private async Task MessageReceivedAsync(IDialogContext context, IAwaitable<object> result)
+        [LuisIntent("Recomendar passeios")]
+        public async Task RecomendarPasseiosAsync(IDialogContext context, LuisResult result)
         {
-            var activity = await result as Activity;
-
-            // calculate something for us to return
-            int length = (activity.Text ?? string.Empty).Length;
-
-            // return our reply to the user
-            await context.PostAsync($"You sent {activity.Text} which was {length} characters");
-
-            context.Wait(MessageReceivedAsync);
+            await context.PostAsync("Recomendar passeios");
+            context.Done<string>(null);
         }
+
+        [LuisIntent("Recomendar hoteis")]
+        public async Task RecomendarHoteisAsync(IDialogContext context, LuisResult result)
+        {
+            await context.PostAsync("Recomendar hoteis");
+            context.Done<string>(null);
+        }
+
+        [LuisIntent("Converter moeda")]
+        public async Task ConverterMoedaAsync(IDialogContext context, LuisResult result)
+        {
+            await context.PostAsync("Converter moeda");
+            context.Done<string>(null);
+        }
+
+        [LuisIntent("Ajuda")]
+        public async Task AjudaAsync(IDialogContext context, LuisResult result)
+        {
+            await context.PostAsync("Ajuda");
+            context.Done<string>(null);
+        }
+
+        [LuisIntent("none")]
+        public async Task NoneAsync(IDialogContext context, LuisResult result)
+        {
+            await context.PostAsync("none");
+            context.Done<string>(null);
+        }
+
     }
 }
