@@ -1,8 +1,10 @@
-﻿using System.Net;
+﻿using System.Configuration;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Connector;
 
 namespace BotViajadao
@@ -16,6 +18,11 @@ namespace BotViajadao
         /// </summary>
         public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
+            var attributes = new LuisModelAttribute(
+                ConfigurationManager.AppSettings["LuisId"],
+                ConfigurationManager.AppSettings["LuisSubscriptionKey"]);
+            var service = new LuisService(attributes);
+
             if (activity.Type == ActivityTypes.Message)
             {
                 await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
