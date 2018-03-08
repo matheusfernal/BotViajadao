@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Builder.Luis.Models;
 
 namespace BotViajadao.Dialogs
 {
     [Serializable]
-    public class RootDialog : LuisDialog<object>
+    public class MainDialog : LuisDialog<object>
     {
+        public MainDialog(ILuisService service) : base(service) { }
+
         [LuisIntent("Recomendar restaurantes")]
         public async Task RecomendarRestaurantesAsync(IDialogContext context, LuisResult result)
         {
@@ -47,6 +50,16 @@ namespace BotViajadao.Dialogs
         public async Task NoneAsync(IDialogContext context, LuisResult result)
         {
             await context.PostAsync("none");
+            context.Done<string>(null);
+        }
+
+        /// <summary>
+        /// Quando não houve intenção reconhecida.
+        /// </summary>
+        [LuisIntent("")]
+        public async Task IntencaoNaoReconhecida(IDialogContext context, LuisResult result)
+        {
+            await context.PostAsync("null");
             context.Done<string>(null);
         }
 
