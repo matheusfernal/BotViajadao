@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using BotViajadao.Services;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Builder.Luis.Models;
@@ -28,6 +29,8 @@ namespace BotViajadao.Dialogs
         [LuisIntent("Recomendar hoteis")]
         public async Task RecomendarHoteisAsync(IDialogContext context, LuisResult result)
         {
+            var resposta = await new YelpService().BuscarHoteis("New York");
+
             await context.PostAsync("Recomendar hoteis");
             context.Done<string>(null);
         }
