@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using BotViajadao.Model;
@@ -140,7 +141,7 @@ namespace BotViajadao.Dialogs
                     {
                         Title = "Abrir no mapa",
                         Type = ActionTypes.OpenUrl,
-                        Value = "" //TODO: Pesquisar url para abrir coordenadas no app de mapas
+                        Value = $"http://maps.google.com/?q={business.Coordinates.Latitude.ToString(CultureInfo.InvariantCulture)},{business.Coordinates.Longitude.ToString(CultureInfo.InvariantCulture)}"
                     }
                 }
             }.ToAttachment();
