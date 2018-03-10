@@ -21,14 +21,14 @@ namespace BotViajadao.Dialogs
         public MainDialog(ILuisService service) : base(service) { }
 
         [LuisIntent("Recomendar restaurantes")]
-        public async Task RecomendarRestaurantesAsync(IDialogContext context, LuisResult result)
+        public async Task RecomendarRestaurantesAsync(IDialogContext context, IAwaitable<IMessageActivity> activity, LuisResult result)
         {
             await context.PostAsync("Recomendar restaurantes");
             context.Done<string>(null);
         }
 
         [LuisIntent("Recomendar passeios")]
-        public async Task RecomendarPasseiosAsync(IDialogContext context, LuisResult result)
+        public async Task RecomendarPasseiosAsync(IDialogContext context, IAwaitable<IMessageActivity> activity, LuisResult result)
         {
             await context.PostAsync("Recomendar passeios");
             context.Done<string>(null);
@@ -57,21 +57,21 @@ namespace BotViajadao.Dialogs
         }
 
         [LuisIntent("Converter moeda")]
-        public async Task ConverterMoedaAsync(IDialogContext context, LuisResult result)
+        public async Task ConverterMoedaAsync(IDialogContext context, IAwaitable<IMessageActivity> activity, LuisResult result)
         {
             await context.PostAsync("Converter moeda");
             context.Done<string>(null);
         }
 
         [LuisIntent("Ajuda")]
-        public async Task AjudaAsync(IDialogContext context, LuisResult result)
+        public async Task AjudaAsync(IDialogContext context, IAwaitable<IMessageActivity> activity, LuisResult result)
         {
             await context.PostAsync("Ajuda");
             context.Done<string>(null);
         }
 
         [LuisIntent("none")]
-        public async Task NoneAsync(IDialogContext context, LuisResult result)
+        public async Task NoneAsync(IDialogContext context, IAwaitable<IMessageActivity> activity, LuisResult result)
         {
             await context.PostAsync("none");
             context.Done<string>(null);
@@ -81,7 +81,7 @@ namespace BotViajadao.Dialogs
         /// Quando não houve intenção reconhecida.
         /// </summary>
         [LuisIntent("")]
-        public async Task IntencaoNaoReconhecida(IDialogContext context, LuisResult result)
+        public async Task IntencaoNaoReconhecida(IDialogContext context, IAwaitable<IMessageActivity> activity, LuisResult result)
         {
             await context.PostAsync("null");
             context.Done<string>(null);
@@ -118,7 +118,7 @@ namespace BotViajadao.Dialogs
             context.Wait(MessageReceived);
         }
 
-        public Attachment MontaCardResposta(Business business)
+        private Attachment MontaCardResposta(Business business)
         {
             return new HeroCard
             {
