@@ -7,7 +7,7 @@ using System.Web;
 
 namespace BotViajadao.Services
 {
-    public class YelpService
+    public class YelpService : IDisposable
     {
         private readonly HttpClient _client;
         private readonly UriBuilder _builder;
@@ -46,9 +46,10 @@ namespace BotViajadao.Services
                 var st = e.StackTrace;
                 //TODO: Logar exceção
             }
-            
 
             return resposta;
         }
+
+        public void Dispose() => _client.Dispose();
     }
 }
