@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace BotViajadao.Models
+namespace BotViajadao.Model
 {
     public class Business
     {

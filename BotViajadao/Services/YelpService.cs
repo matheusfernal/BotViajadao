@@ -1,4 +1,4 @@
-﻿using BotViajadao.Models;
+﻿using BotViajadao.Model;
 using System;
 using System.Configuration;
 using System.Net.Http;
