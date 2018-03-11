@@ -41,6 +41,8 @@ namespace BotViajadao.Dialogs
         [LuisIntent("Converter moeda")]
         public async Task ConverterMoedaAsync(IDialogContext context, IAwaitable<IMessageActivity> activity, LuisResult result)
         {
+            var moedas = result.Entities?.Select(e => e.Entity);
+
             await context.PostAsync("Converter moeda");
             context.Done<string>(null);
         }
@@ -68,6 +70,8 @@ namespace BotViajadao.Dialogs
             await context.PostAsync("null");
             context.Done<string>(null);
         }
+
+        #region Métodos Privados
 
         private async Task RecomendarItensAsync(IDialogContext context, IAwaitable<IMessageActivity> activity, LuisResult result, EnumTipoBusca tipoBusca)
         {
@@ -102,7 +106,7 @@ namespace BotViajadao.Dialogs
         {
             await context.PostAsync(TipoBusca.MensagemPesquisandoItens(tipoBusca));
 
-            using (var service = new YelpService())
+            using (var service = new ServicoYelp())
             {
                 var resposta = await service.BuscarItens(cidade, tipoBusca);
 
@@ -150,6 +154,8 @@ namespace BotViajadao.Dialogs
                 }
             }.ToAttachment();
         }
+
+        #endregion
 
     }
 }

@@ -8,20 +8,17 @@ using BotViajadao.Dialogs;
 
 namespace BotViajadao.Services
 {
-    public class YelpService : IDisposable
+    public class ServicoYelp : ServicoBase
     {
-        private readonly HttpClient _client;
         private readonly UriBuilder _builder;
 
-        private const string BaseUrl = "https://api.yelp.com/v3/businesses/search";
+        private static readonly string _baseUrl = ConfigurationManager.AppSettings["YelpBaseUrl"];
 
-        public YelpService()
+        public ServicoYelp()
         {
-            _client = new HttpClient();
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", ConfigurationManager.AppSettings["YelpApiKey"]);
 
-            _builder = new UriBuilder(BaseUrl);
-            _builder.Port = -1;
+            _builder = ConstruirUriBuilder(_baseUrl);
         }
 
         public async Task<RespostaBuscaYelp> BuscarItens(string cidade, EnumTipoBusca tipoBusca)
@@ -50,7 +47,5 @@ namespace BotViajadao.Services
 
             return resposta;
         }
-
-        public void Dispose() => _client.Dispose();
     }
 }
