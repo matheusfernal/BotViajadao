@@ -37,7 +37,7 @@ namespace BotViajadao.Dialogs
                 case EnumTipoBusca.Restaurante:
                     return $"Encontrei {quantidadeItens} restaurantes pra vc. Espero que algum seja delicioso.";
                 case EnumTipoBusca.Passeio:
-                    return $"Esses {quantidadeItens} passeios que encontrei parecem legais.";
+                    return $"Não esqueça a câmera! Esses {quantidadeItens} passeios que encontrei parecem emocionantes.";
                 default:
                     return "Relaxa que já vou encontrar o que procura.";
             }

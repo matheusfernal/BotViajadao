@@ -16,21 +16,20 @@ namespace BotViajadao.Dialogs
     public class MainDialog : LuisDialog<object>
     {
         private const int MaximoResultados = 5;
+        private EnumTipoBusca _tipoBuscaAtual;
 
         public MainDialog(ILuisService service) : base(service) { }
 
         [LuisIntent("Recomendar restaurantes")]
         public async Task RecomendarRestaurantesAsync(IDialogContext context, IAwaitable<IMessageActivity> activity, LuisResult result)
         {
-            await context.PostAsync("Recomendar restaurantes");
-            context.Done<string>(null);
+            await RecomendarItensAsync(context, activity, result, EnumTipoBusca.Restaurante);
         }
 
         [LuisIntent("Recomendar passeios")]
         public async Task RecomendarPasseiosAsync(IDialogContext context, IAwaitable<IMessageActivity> activity, LuisResult result)
         {
-            await context.PostAsync("Recomendar passeios");
-            context.Done<string>(null);
+            await RecomendarItensAsync(context, activity, result, EnumTipoBusca.Passeio);
         }
 
         [LuisIntent("Recomendar hoteis")]
@@ -76,7 +75,8 @@ namespace BotViajadao.Dialogs
             if (cidades == null || cidades.Count() == 0)
             {
                 await context.PostAsync(TipoBusca.MensagemInformarCidade(tipoBusca));
-                context.Wait((c, a) => RecomendarItens(c, a, tipoBusca));
+                _tipoBuscaAtual = tipoBusca;
+                context.Wait((c, a) => RecomendarItens(c, a));
                 return;
             }
             else if (cidades.Count() > 1)
@@ -91,10 +91,10 @@ namespace BotViajadao.Dialogs
             context.Done<string>(null);
         }
 
-        private async Task RecomendarItens(IDialogContext context, IAwaitable<IMessageActivity> value, EnumTipoBusca tipoBusca)
+        private async Task RecomendarItens(IDialogContext context, IAwaitable<IMessageActivity> value)
         {
             var cidade = await value;
-            await RecomendarItens(context, value, cidade.Text, tipoBusca);
+            await RecomendarItens(context, value, cidade.Text, _tipoBuscaAtual);
 
         }
 

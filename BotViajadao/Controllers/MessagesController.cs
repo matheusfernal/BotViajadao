@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -19,6 +20,8 @@ namespace BotViajadao
         /// </summary>
         public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
+            var connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+
             var attributes = new LuisModelAttribute(
                 ConfigurationManager.AppSettings["LuisId"],
                 ConfigurationManager.AppSettings["LuisSubscriptionKey"]);
@@ -26,6 +29,10 @@ namespace BotViajadao
 
             if (activity.Type == ActivityTypes.Message)
             {
+                var isTypingActivity = activity.CreateReply();
+                isTypingActivity.Type = ActivityTypes.Typing;
+                await connector.Conversations.ReplyToActivityAsync(isTypingActivity);
+
                 await Conversation.SendAsync(activity, () => new MainDialog(service));
             }
             else
