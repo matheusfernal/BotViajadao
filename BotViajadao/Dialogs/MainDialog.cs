@@ -41,7 +41,7 @@ namespace BotViajadao.Dialogs
             if (cidades == null || cidades.Count() == 0)
             {
                 await context.PostAsync("Entendi, agore me envie em qual cidade você quer se hospedar.");
-                context.Wait((c, a) => RecomendarHoteis(c, a));
+                context.Wait((c, a) => RecomendarItens(c, a, EnumTipoBusca.Restaurante));
                 return;
             }
             else if (cidades.Count() > 1)
@@ -50,7 +50,7 @@ namespace BotViajadao.Dialogs
             }
             else
             {
-                await RecomendarHoteis(context, activity, cidades.Single());
+                await RecomendarItens(context, activity, cidades.Single(), EnumTipoBusca.Restaurante);
             }
 
             context.Done<string>(null);
@@ -87,23 +87,23 @@ namespace BotViajadao.Dialogs
             context.Done<string>(null);
         }
 
-        private async Task RecomendarHoteis(IDialogContext context, IAwaitable<IMessageActivity> value)
+        private async Task RecomendarItens(IDialogContext context, IAwaitable<IMessageActivity> value, EnumTipoBusca tipoBusca)
         {
             var cidade = await value;
-            await RecomendarHoteis(context, value, cidade.Text);
+            await RecomendarItens(context, value, cidade.Text, tipoBusca);
 
         }
 
-        private async Task RecomendarHoteis(IDialogContext context, IAwaitable<IMessageActivity> activity, string cidade)
+        private async Task RecomendarItens(IDialogContext context, IAwaitable<IMessageActivity> activity, string cidade, EnumTipoBusca tipoBusca)
         {
-            await context.PostAsync("Estou pesquisando hoteis para vc...");
+            await context.PostAsync(TipoBusca.MensagemPesquisandoItens(tipoBusca));
 
             using (var service = new YelpService())
             {
                 var resposta = await service.BuscarHoteis(cidade);
 
                 var atividade = await activity as Activity;
-                var mensagem = atividade?.CreateReply();
+                var mensagem = atividade.CreateReply();
                 var businesses = resposta.Businesses.ToList();
                 for (var i = 0; i < businesses.Count && i < MaximoResultados; i++)
                 {
@@ -111,7 +111,7 @@ namespace BotViajadao.Dialogs
                     mensagem?.Attachments.Add(MontaCardResposta(business));
                 }
 
-                await context.PostAsync("Aqui estão 5 hoteis que encontrei");
+                await context.PostAsync(TipoBusca.MensagemItensEncontrados(tipoBusca, mensagem.Attachments.Count));
                 await context.PostAsync(mensagem);
             }
 
