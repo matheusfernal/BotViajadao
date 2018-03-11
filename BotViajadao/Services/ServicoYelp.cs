@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using BotViajadao.Dialogs;
+using BotViajadao.Model.Yelp;
 
 namespace BotViajadao.Services
 {
@@ -41,8 +42,8 @@ namespace BotViajadao.Services
             }
             catch(Exception e)
             {
-                var st = e.StackTrace;
-                //TODO: Logar exceção
+                Console.WriteLine(e);
+                throw;
             }
 
             return resposta;

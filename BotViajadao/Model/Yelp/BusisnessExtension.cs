@@ -1,4 +1,4 @@
-﻿namespace BotViajadao.Model
+﻿namespace BotViajadao.Model.Yelp
 {
     public static class BusisnessExtension
     {

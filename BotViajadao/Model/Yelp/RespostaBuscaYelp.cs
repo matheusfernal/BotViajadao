@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BotViajadao.Model
+namespace BotViajadao.Model.Yelp
 {
     public class RespostaBuscaYelp
     {

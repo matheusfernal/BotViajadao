@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace BotViajadao.Model
+namespace BotViajadao.Model.Yelp
 {
     public class Business
     {

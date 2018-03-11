@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using BotViajadao.Model;
+using BotViajadao.Model.Yelp;
 using BotViajadao.Services;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis;
@@ -42,6 +43,11 @@ namespace BotViajadao.Dialogs
         public async Task ConverterMoedaAsync(IDialogContext context, IAwaitable<IMessageActivity> activity, LuisResult result)
         {
             var moedas = result.Entities?.Select(e => e.Entity);
+
+            using (var servico = new ServicoCotacao())
+            {
+                var moedasDisponiveis = await servico.BuscarMoedasDisponiveis();
+            }
 
             await context.PostAsync("Converter moeda");
             context.Done<string>(null);
