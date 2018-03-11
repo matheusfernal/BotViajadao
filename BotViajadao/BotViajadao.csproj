@@ -140,8 +140,8 @@
     <Compile Include="Util\Emoji.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AppSettings\DebugAppSettings.config" />
-    <Content Include="AppSettings\ReleaseAppSettings.config" />
+    <None Include="AppSettings\DebugAppSettings.config" />
+    <None Include="AppSettings\ReleaseAppSettings.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

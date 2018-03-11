@@ -41,7 +41,7 @@ namespace BotViajadao.Dialogs
             if (cidades == null || cidades.Count() == 0)
             {
                 await context.PostAsync("Entendi, agore me envie em qual cidade você quer se hospedar.");
-                context.Wait((c, a) => RecomendarItens(c, a, EnumTipoBusca.Restaurante));
+                context.Wait((c, a) => RecomendarItens(c, a, EnumTipoBusca.Hotel));
                 return;
             }
             else if (cidades.Count() > 1)
@@ -50,7 +50,7 @@ namespace BotViajadao.Dialogs
             }
             else
             {
-                await RecomendarItens(context, activity, cidades.Single(), EnumTipoBusca.Restaurante);
+                await RecomendarItens(context, activity, cidades.Single(), EnumTipoBusca.Hotel);
             }
 
             context.Done<string>(null);
