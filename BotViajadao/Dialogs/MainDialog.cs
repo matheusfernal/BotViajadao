@@ -100,7 +100,7 @@ namespace BotViajadao.Dialogs
 
             using (var service = new YelpService())
             {
-                var resposta = await service.BuscarHoteis(cidade);
+                var resposta = await service.BuscarItens(cidade, tipoBusca);
 
                 var atividade = await activity as Activity;
                 var mensagem = atividade.CreateReply();

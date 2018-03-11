@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
+using BotViajadao.Dialogs;
 
 namespace BotViajadao.Services
 {
@@ -23,13 +24,13 @@ namespace BotViajadao.Services
             _builder.Port = -1;
         }
 
-        public async Task<RespostaBuscaYelp> BuscarHoteis(string cidade)
+        public async Task<RespostaBuscaYelp> BuscarItens(string cidade, EnumTipoBusca tipoBusca)
         {
             RespostaBuscaYelp resposta = null;
             try
             {
                 var query = HttpUtility.ParseQueryString(_builder.Query);
-                query["term"] = "hotels";
+                query["categories"] = TipoBusca.CategoriaBuscaYelp(tipoBusca);
                 query["location"] = cidade;
                 _builder.Query = query.ToString();
 

@@ -41,5 +41,20 @@ namespace BotViajadao.Dialogs
                     return "Relaxa que já vou encontrar o que procura.";
             }
         }
+
+        public static string CategoriaBuscaYelp(EnumTipoBusca tipoBusca) {
+            switch (tipoBusca)
+            {
+                case EnumTipoBusca.Hotel:
+                return "hotels";
+                case EnumTipoBusca.Restaurante:
+                return "restaurants";
+                case EnumTipoBusca.Passeio:
+                return "tours";
+                default:
+                return "";
+            }
+        }
     }
+
 }
