@@ -9,7 +9,6 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Builder.Luis.Models;
 using Microsoft.Bot.Connector;
-using Util;
 
 namespace BotViajadao.Dialogs
 {
@@ -37,23 +36,7 @@ namespace BotViajadao.Dialogs
         [LuisIntent("Recomendar hoteis")]
         public async Task RecomendarHoteisAsync(IDialogContext context, IAwaitable<IMessageActivity> activity, LuisResult result)
         {
-            var cidades = result.Entities?.Select(e => e.Entity);
-            if (cidades == null || cidades.Count() == 0)
-            {
-                await context.PostAsync("Entendi, agore me envie em qual cidade você quer se hospedar.");
-                context.Wait((c, a) => RecomendarItens(c, a, EnumTipoBusca.Hotel));
-                return;
-            }
-            else if (cidades.Count() > 1)
-            {
-                await context.PostAsync($"Desculpe mas eu só consigo recomendar hotéis para uma cidade por vez {Emoji.Confused}");
-            }
-            else
-            {
-                await RecomendarItens(context, activity, cidades.Single(), EnumTipoBusca.Hotel);
-            }
-
-            context.Done<string>(null);
+            await RecomendarItensAsync(context, activity, result, EnumTipoBusca.Hotel);
         }
 
         [LuisIntent("Converter moeda")]
@@ -84,6 +67,27 @@ namespace BotViajadao.Dialogs
         public async Task IntencaoNaoReconhecida(IDialogContext context, IAwaitable<IMessageActivity> activity, LuisResult result)
         {
             await context.PostAsync("null");
+            context.Done<string>(null);
+        }
+
+        private async Task RecomendarItensAsync(IDialogContext context, IAwaitable<IMessageActivity> activity, LuisResult result, EnumTipoBusca tipoBusca)
+        {
+            var cidades = result.Entities?.Select(e => e.Entity);
+            if (cidades == null || cidades.Count() == 0)
+            {
+                await context.PostAsync(TipoBusca.MensagemInformarCidade(tipoBusca));
+                context.Wait((c, a) => RecomendarItens(c, a, tipoBusca));
+                return;
+            }
+            else if (cidades.Count() > 1)
+            {
+                await context.PostAsync(TipoBusca.MensagemInformarApenasUmaCidade(tipoBusca));
+            }
+            else
+            {
+                await RecomendarItens(context, activity, cidades.Single(), tipoBusca);
+            }
+
             context.Done<string>(null);
         }
 

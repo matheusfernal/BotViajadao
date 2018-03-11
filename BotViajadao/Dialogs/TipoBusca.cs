@@ -1,5 +1,6 @@
 ﻿using System.Net.Sockets;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Util;
 
 namespace BotViajadao.Dialogs
 {
@@ -42,19 +43,50 @@ namespace BotViajadao.Dialogs
             }
         }
 
-        public static string CategoriaBuscaYelp(EnumTipoBusca tipoBusca) {
+        public static string MensagemInformarCidade(EnumTipoBusca tipoBusca)
+        {
             switch (tipoBusca)
             {
                 case EnumTipoBusca.Hotel:
-                return "hotels";
+                    return "Entendi, agore me envie em qual cidade você quer se hospedar.";
                 case EnumTipoBusca.Restaurante:
-                return "restaurants";
+                    return "Me diga em qual cidade você procura um restaurante.";
                 case EnumTipoBusca.Passeio:
-                return "tours";
+                    return "Passeios são legais! Mas para qual cidade você que que eu procure?";
                 default:
-                return "";
+                    return "";
             }
         }
-    }
 
+        public static string MensagemInformarApenasUmaCidade(EnumTipoBusca tipoBusca)
+        {
+            switch (tipoBusca)
+            {
+                case EnumTipoBusca.Hotel:
+                    return $"Desculpe mas eu só consigo recomendar hotéis para uma cidade por vez {Emoji.Confused}";
+                case EnumTipoBusca.Restaurante:
+                    return $"Desculpe mas eu só consigo recomendar restaurantes para uma cidade por vez {Emoji.Confused}";
+                case EnumTipoBusca.Passeio:
+                    return $"Desculpe mas eu só consigo recomendar passeios para uma cidade por vez {Emoji.Confused}";
+                default:
+                    return "";
+            }
+        }
+
+        public static string CategoriaBuscaYelp(EnumTipoBusca tipoBusca)
+        {
+            switch (tipoBusca)
+            {
+                case EnumTipoBusca.Hotel:
+                    return "hotels";
+                case EnumTipoBusca.Restaurante:
+                    return "restaurants";
+                case EnumTipoBusca.Passeio:
+                    return "tours";
+                default:
+                    return "";
+            }
+        }
+
+    }
 }
