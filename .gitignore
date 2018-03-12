@@ -261,4 +261,4 @@ __pycache__/
 *.pyc
 
 #Application keys
-/BotViajadao/AppSettings/DebugAppSettings.config
+/BotViajadao/App_Start/DebugAppSettings.config
