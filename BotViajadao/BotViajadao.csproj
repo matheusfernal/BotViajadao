@@ -146,11 +146,12 @@
     <Compile Include="Util\Emoji.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AppSettings\DebugAppSettings.config" />
-    <None Include="AppSettings\ReleaseAppSettings.config" />
+    <Content Include="AppSettings\DebugAppSettings.config" />
+    <Content Include="AppSettings\ReleaseAppSettings.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
