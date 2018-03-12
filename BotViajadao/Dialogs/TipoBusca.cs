@@ -1,6 +1,6 @@
 ﻿using System.Net.Sockets;
 using System.Runtime.InteropServices.WindowsRuntime;
-using Util;
+using BotViajadao.Util;
 
 namespace BotViajadao.Dialogs
 {

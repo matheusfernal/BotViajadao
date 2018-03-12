@@ -9,7 +9,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Connector;
 
-namespace BotViajadao
+namespace BotViajadao.Controllers
 {
     [BotAuthentication]
     public class MessagesController : ApiController

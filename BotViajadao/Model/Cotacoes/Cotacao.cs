@@ -2,12 +2,11 @@
 
 namespace BotViajadao.Model.Cotacoes
 {
-    public class Moeda
+    public class Cotacao
     {
-        [JsonProperty("moeda")]
-        public string Simbolo { get; set; }
-
         public string Nome { get; set; }
+
+        public float Valor { get; set; }
 
         public string Fonte { get; set; }
     }

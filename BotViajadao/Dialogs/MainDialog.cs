@@ -4,8 +4,10 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using BotViajadao.Model;
+using BotViajadao.Model.Cotacoes;
 using BotViajadao.Model.Yelp;
 using BotViajadao.Services;
+using BotViajadao.Util;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Builder.Luis.Models;
@@ -42,14 +44,31 @@ namespace BotViajadao.Dialogs
         [LuisIntent("Converter moeda")]
         public async Task ConverterMoedaAsync(IDialogContext context, IAwaitable<IMessageActivity> activity, LuisResult result)
         {
-            var moedas = result.Entities?.Select(e => e.Entity);
+            var moedas = result.Entities?.Select(e => e.Entity).ToList();
 
             using (var servico = new ServicoCotacao())
             {
-                var moedasDisponiveis = await servico.BuscarMoedasDisponiveis();
+                var cotacoes = await servico.BuscarCotacoes();
+                Cotacao cotacao = null;
+
+                if (moedas != null && moedas.Count == 1)
+                {
+                    cotacao = EncontraCotacao(moedas.Single(), cotacoes.Valores);
+                }
+
+                if (cotacao != null)
+                {
+                    await context.PostAsync($"O valor do {moedas.Single()} hoje é de **{cotacao.ObtemValorCotacaoFormatado()}**");
+                }
+                else
+                {
+                    await context.PostAsync("As cotações que tenho hoje são:");
+                    var texto = cotacoes.Valores.Values.Select(c => $"{c.ObtemTextoCotacao()}").Aggregate((t1, t2) => $"{t1}\n\n{t2}");
+
+                    await context.PostAsync(texto);
+                }
             }
 
-            await context.PostAsync("Converter moeda");
             context.Done<string>(null);
         }
 
@@ -159,6 +178,26 @@ namespace BotViajadao.Dialogs
                     }
                 }
             }.ToAttachment();
+        }
+
+        private Cotacao EncontraCotacao(string moedaUsuario, Dictionary<string, Cotacao> cotacoes)
+        {
+            foreach (var codigoMoeda in cotacoes.Keys)
+            {
+                // Se o usuário digitou um código tipo USD, EUR, etc -> verifica ignorando case e acentos
+                if (string.Compare(moedaUsuario.Trim(), codigoMoeda.Trim(), CultureInfo.InvariantCulture, CompareOptions.IgnoreNonSpace | CompareOptions.IgnoreCase) == 0)
+                {
+                    return cotacoes[codigoMoeda];
+                }
+                
+                // Se o usuário digitou o nome da moeda como dólar, euro, etc -> verifica se varia por duas letras ignorando case
+                if (moedaUsuario.Trim().ToLowerInvariant().DamerauLevenshteinDistanceTo(cotacoes[codigoMoeda].Nome.Trim().ToLowerInvariant()) <= 2)
+                {
+                    return cotacoes[codigoMoeda];
+                }
+            }
+
+            return null;
         }
 
         #endregion

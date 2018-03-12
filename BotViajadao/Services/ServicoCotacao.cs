@@ -17,17 +17,17 @@ namespace BotViajadao.Services
             _builder = ConstruirUriBuilder(_baseUrl);
         }
 
-        public async Task<RespostaBuscaMoedasDisponiveis> BuscarMoedasDisponiveis()
+        public async Task<RespostaBuscaCotacoes> BuscarCotacoes()
         {
-            RespostaBuscaMoedasDisponiveis resposta = null;
+            RespostaBuscaCotacoes resposta = null;
             try
             {
-                var url = $"{_baseUrl}moedas";
+                var url = $"{_baseUrl}valores";
 
                 var response = await _client.GetAsync(url);
                 if (response.IsSuccessStatusCode)
                 {
-                    resposta = await response.Content.ReadAsAsync<RespostaBuscaMoedasDisponiveis>();
+                    resposta = await response.Content.ReadAsAsync<RespostaBuscaCotacoes>();
                 }
             }
             catch (Exception e)

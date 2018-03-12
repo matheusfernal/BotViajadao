@@ -1,6 +1,6 @@
 ﻿namespace BotViajadao.Model.Yelp
 {
-    public static class BusisnessExtension
+    public static class BusisnessExtensions
     {
         public static string ObtemSubtituloCard(this Business busisness)
         {

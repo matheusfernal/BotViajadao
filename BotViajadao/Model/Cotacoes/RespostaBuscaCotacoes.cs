@@ -2,9 +2,9 @@
 
 namespace BotViajadao.Model.Cotacoes
 {
-    public class RespostaBuscaMoedasDisponiveis
+    public class RespostaBuscaCotacoes
     {
         public string Status { get; set; }
-        public Dictionary<string, Moeda> Moedas { get; set; }
+        public Dictionary<string, Cotacao> Valores { get; set; }
     }
 }

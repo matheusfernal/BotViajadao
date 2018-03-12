@@ -130,10 +130,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Model\Cotacoes\Moeda.cs" />
-    <Compile Include="Model\Cotacoes\RespostaBuscaMoedasDisponiveis.cs" />
+    <Compile Include="Model\Cotacoes\Cotacao.cs" />
+    <Compile Include="Model\Cotacoes\CotacaoExtensions.cs" />
+    <Compile Include="Model\Cotacoes\RespostaBuscaCotacoes.cs" />
     <Compile Include="Model\Yelp\Business.cs" />
-    <Compile Include="Model\Yelp\BusisnessExtension.cs" />
+    <Compile Include="Model\Yelp\BusisnessExtensions.cs" />
     <Compile Include="Model\Yelp\Coordenadas.cs" />
     <Compile Include="Model\Yelp\Localizacao.cs" />
     <Compile Include="Model\Yelp\RespostaBuscaYelp.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Services\ServicoBase.cs" />
     <Compile Include="Services\ServicoCotacao.cs" />
     <Compile Include="Services\ServicoYelp.cs" />
+    <Compile Include="Util\DamerauLevenshtein.cs" />
     <Compile Include="Util\Emoji.cs" />
   </ItemGroup>
   <ItemGroup>
