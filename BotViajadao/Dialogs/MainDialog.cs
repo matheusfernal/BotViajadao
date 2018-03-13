@@ -75,14 +75,20 @@ namespace BotViajadao.Dialogs
         [LuisIntent("Ajuda")]
         public async Task AjudaAsync(IDialogContext context, IAwaitable<IMessageActivity> activity, LuisResult result)
         {
-            await context.PostAsync("Ajuda");
+            var mensagem = $"Estou sempre pronto para ajudar {Emoji.Grin}\n\n" +
+                            "Você pode me pedir as seguintes coisas:\n" +
+                            "* Recomendar restaurantes, hoteis ou passeios turísticos em alguma cidade.\n" +
+                            "* Obter cotações de moedas.\n" +
+                            "* Traduzir um audio para inglês.";
+
+            await context.PostAsync(mensagem);
             context.Done<string>(null);
         }
 
         [LuisIntent("none")]
         public async Task NoneAsync(IDialogContext context, IAwaitable<IMessageActivity> activity, LuisResult result)
         {
-            await context.PostAsync("none");
+            await ExibeMensagemQueNaoEntedeu(context);
             context.Done<string>(null);
         }
 
@@ -92,7 +98,7 @@ namespace BotViajadao.Dialogs
         [LuisIntent("")]
         public async Task IntencaoNaoReconhecida(IDialogContext context, IAwaitable<IMessageActivity> activity, LuisResult result)
         {
-            await context.PostAsync("null");
+            await ExibeMensagemQueNaoEntedeu(context);
             context.Done<string>(null);
         }
 
@@ -199,6 +205,16 @@ namespace BotViajadao.Dialogs
 
             return null;
         }
+
+        private async Task ExibeMensagemQueNaoEntedeu(IDialogContext context)
+        {
+            var mensagem = $"Isso é um pouco constrangedor mas não consegui entender o que você precisa. {Emoji.Flushed}\n\n" +
+                           $"Se estiver se sentindo perdido, não exite em pedir ajuda. Todos nós estamos aprendendo. {Emoji.Blush}";
+
+
+            await context.PostAsync(mensagem);
+        }
+
 
         #endregion
 
