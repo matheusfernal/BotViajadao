@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Configuration;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using BotViajadao.Dialogs;
+using BotViajadao.Services;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Connector;
@@ -20,6 +22,10 @@ namespace BotViajadao.Controllers
         /// </summary>
         public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
+            //Teste
+            var resposta = new ServicoReconhecimentoFala().ConverterAudio(activity.Attachments.First().ContentUrl);
+
+
             var connector = new ConnectorClient(new Uri(activity.ServiceUrl));
 
             var attributes = new LuisModelAttribute(
