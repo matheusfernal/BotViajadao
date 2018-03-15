@@ -58,6 +58,7 @@ namespace BotViajadao.Services
                 query["appid"] = $"Bearer {token}";
                 query["language"] = "en";
                 query["format"] = "audio/mp3";
+                query["options"] = "male";
                 query["text"] = texto.Length >= 2000 ? texto.Substring(0, 2000) : texto;
 
                 builder.Query = query.ToString();
