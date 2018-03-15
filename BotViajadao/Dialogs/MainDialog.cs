@@ -72,6 +72,13 @@ namespace BotViajadao.Dialogs
             context.Done<string>(null);
         }
 
+        [LuisIntent("Traduzir texto")]
+        public async Task TraduzirTextoAsync(IDialogContext context, IAwaitable<IMessageActivity> activity, LuisResult result)
+        {
+            await context.PostAsync("Blza! Agora digite o texto que deseja que eu traduza para você.");
+            context.Wait((c, a) => TraduzirTexto(c,a));
+        }
+
         [LuisIntent("Ajuda")]
         public async Task AjudaAsync(IDialogContext context, IAwaitable<IMessageActivity> activity, LuisResult result)
         {
@@ -79,7 +86,7 @@ namespace BotViajadao.Dialogs
                             "Você pode me pedir as seguintes coisas:\n" +
                             "* Recomendar restaurantes, hoteis ou passeios turísticos em alguma cidade.\n" +
                             "* Obter cotações de moedas.\n" +
-                            "* Traduzir um audio para inglês.";
+                            "* Traduzir um texto para inglês.";
 
             await context.PostAsync(mensagem);
             context.Done<string>(null);
@@ -215,6 +222,19 @@ namespace BotViajadao.Dialogs
             await context.PostAsync(mensagem);
         }
 
+        private async Task TraduzirTexto(IDialogContext context, IAwaitable<IMessageActivity> value)
+        {
+            var texto = await value;
+            using (var service = new ServicoTraducaoTexto())
+            {
+                var resposta = await service.TraduzirTexto(texto.Text);
+
+                await context.PostAsync("Aqui está o seu texto em inglês:");
+                await context.PostAsync(resposta);
+            }
+
+            context.Wait(MessageReceived);
+        }
 
         #endregion
 

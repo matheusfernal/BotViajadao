@@ -3,11 +3,11 @@ using System.Net.Http;
 
 namespace BotViajadao.Services
 {
-    public class ServicoBase : IDisposable
+    public abstract class ServicoBase : IDisposable
     {
         protected readonly HttpClient _client;
 
-        public ServicoBase()
+        protected ServicoBase()
         {
             _client = new HttpClient();
         }

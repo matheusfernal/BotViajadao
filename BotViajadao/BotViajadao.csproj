@@ -142,6 +142,7 @@
     <Compile Include="Services\ServicoBase.cs" />
     <Compile Include="Services\ServicoCotacao.cs" />
     <Compile Include="Services\ServicoReconhecimentoFala.cs" />
+    <Compile Include="Services\ServicoTraducaoTexto.cs" />
     <Compile Include="Services\ServicoYelp.cs" />
     <Compile Include="Util\DamerauLevenshtein.cs" />
     <Compile Include="Util\Emoji.cs" />

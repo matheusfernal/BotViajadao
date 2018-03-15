@@ -22,10 +22,6 @@ namespace BotViajadao.Controllers
         /// </summary>
         public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
-            //Teste
-            var resposta = new ServicoReconhecimentoFala().ConverterAudio(activity.Attachments.First().ContentUrl);
-
-
             var connector = new ConnectorClient(new Uri(activity.ServiceUrl));
 
             var attributes = new LuisModelAttribute(

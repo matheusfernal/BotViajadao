@@ -2,6 +2,7 @@
 using System;
 using System.Configuration;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using BotViajadao.Dialogs;
@@ -13,13 +14,10 @@ namespace BotViajadao.Services
     {
         private readonly UriBuilder _builder;
 
-        private static readonly string _baseUrl = ConfigurationManager.AppSettings["YelpBaseUrl"];
-
         public ServicoYelp()
         {
-            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", ConfigurationManager.AppSettings["YelpApiKey"]);
-
-            _builder = ConstruirUriBuilder(_baseUrl);
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ConfigurationManager.AppSettings["YelpApiKey"]);
+            _builder = ConstruirUriBuilder(ConfigurationManager.AppSettings["YelpBaseUrl"]);
         }
 
         public async Task<RespostaBuscaYelp> BuscarItens(string cidade, EnumTipoBusca tipoBusca)
