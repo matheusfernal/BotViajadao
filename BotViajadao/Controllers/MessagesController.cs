@@ -1,15 +1,13 @@
-﻿using System;
+﻿using BotViajadao.Dialogs;
+using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Builder.Luis;
+using Microsoft.Bot.Connector;
+using System;
 using System.Configuration;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using BotViajadao.Dialogs;
-using BotViajadao.Services;
-using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.Luis;
-using Microsoft.Bot.Connector;
 
 namespace BotViajadao.Controllers
 {

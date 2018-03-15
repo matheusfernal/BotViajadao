@@ -1,8 +1,8 @@
-﻿using System;
+﻿using BotViajadao.Model.Cotacoes;
+using System;
 using System.Configuration;
 using System.Net.Http;
 using System.Threading.Tasks;
-using BotViajadao.Model.Cotacoes;
 
 namespace BotViajadao.Services
 {

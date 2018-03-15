@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
-using BotViajadao.Model;
-using BotViajadao.Model.Cotacoes;
+﻿using BotViajadao.Model.Cotacoes;
 using BotViajadao.Model.Yelp;
 using BotViajadao.Services;
 using BotViajadao.Util;
@@ -12,6 +6,11 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Builder.Luis.Models;
 using Microsoft.Bot.Connector;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BotViajadao.Dialogs
 {
@@ -154,7 +153,7 @@ namespace BotViajadao.Dialogs
                 for (var i = 0; i < businesses.Count && i < MaximoResultados; i++)
                 {
                     var business = businesses[i];
-                    mensagem?.Attachments.Add(MontaCardResposta(business));
+                    mensagem?.Attachments.Add(MontaHeroCardResposta(business));
                 }
 
                 await context.PostAsync(TipoBusca.MensagemItensEncontrados(tipoBusca, mensagem.Attachments.Count));
@@ -164,7 +163,7 @@ namespace BotViajadao.Dialogs
             context.Wait(MessageReceived);
         }
 
-        private Attachment MontaCardResposta(Business business)
+        private Attachment MontaHeroCardResposta(Business business)
         {
             return new HeroCard
             {
@@ -189,6 +188,20 @@ namespace BotViajadao.Dialogs
                         Type = ActionTypes.OpenUrl,
                         Value = $"http://maps.google.com/?q={business.Coordinates.Latitude.ToString(CultureInfo.InvariantCulture)},{business.Coordinates.Longitude.ToString(CultureInfo.InvariantCulture)}"
                     }
+                }
+            }.ToAttachment();
+        }
+
+        private Attachment MontaAudioCardResposta(string urlAudio)
+        {
+            return new AudioCard
+            {
+                Title = $"E assim é como se fala {Emoji.Wink}",
+                Autostart = false,
+                Autoloop = false,
+                Media = new List<MediaUrl>
+                {
+                    new MediaUrl(urlAudio)
                 }
             }.ToAttachment();
         }
@@ -230,7 +243,18 @@ namespace BotViajadao.Dialogs
                 var resposta = await service.TraduzirTexto(texto.Text);
 
                 await context.PostAsync("Aqui está o seu texto em inglês:");
-                await context.PostAsync(resposta);
+                await context.PostAsync($"*\"{resposta}\"*");
+
+                var atividade = await value as Activity;
+                var mensagem = atividade.CreateReply();
+
+                using (var authService = new ServicoAutenticacaoTraducao())
+                {
+                    var token = await authService.ObtemTokenAutenticacao();
+
+                    mensagem?.Attachments.Add(MontaAudioCardResposta(service.ObtemUrlParaTextoFalado(resposta, token)));
+                    await context.PostAsync(mensagem);
+                }
             }
 
             context.Wait(MessageReceived);

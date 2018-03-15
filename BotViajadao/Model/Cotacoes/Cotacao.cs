@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace BotViajadao.Model.Cotacoes
+﻿namespace BotViajadao.Model.Cotacoes
 {
     public class Cotacao
     {

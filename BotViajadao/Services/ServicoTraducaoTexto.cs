@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Configuration;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using System.Xml.Linq;
@@ -9,29 +8,28 @@ namespace BotViajadao.Services
 {
     public class ServicoTraducaoTexto : ServicoBase
     {
-        private readonly UriBuilder _builder;
-
         public ServicoTraducaoTexto()
         {
             _client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", ConfigurationManager.AppSettings["TraducaoApiKey"]);
-            _builder = ConstruirUriBuilder(ConfigurationManager.AppSettings["TraducaoBaseUrl"]);
         }
 
         public async Task<string> TraduzirTexto(string texto)
         {
             string resposta = null;
+
             try
             {
-                _builder.Path += "/Translate";
-                var query = HttpUtility.ParseQueryString(_builder.Query);
+                var builder = ConstruirUriBuilder(ConfigurationManager.AppSettings["TraducaoBaseUrl"]);
+                builder.Path += "/Translate";
+                var query = HttpUtility.ParseQueryString(builder.Query);
                 query["appid"] = "";
                 query["from"] = "pt-BR";
                 query["to"] = "en";
                 query["text"] = texto.Length >= 10000 ? texto.Substring(0, 10000) : texto;
 
-                _builder.Query = query.ToString();
+                builder.Query = query.ToString();
 
-                var url = _builder.ToString();
+                var url = builder.ToString();
 
                 var response = await _client.GetAsync(url);
                 if (response.IsSuccessStatusCode)
@@ -47,6 +45,29 @@ namespace BotViajadao.Services
             }
 
             return resposta;
+        }
+
+        public string ObtemUrlParaTextoFalado(string texto, string token)
+        {
+            var builder = ConstruirUriBuilder(ConfigurationManager.AppSettings["TraducaoBaseUrl"]);
+
+            try
+            {
+                builder.Path += "/Speak";
+                var query = HttpUtility.ParseQueryString(builder.Query);
+                query["appid"] = $"Bearer {token}";
+                query["language"] = "en";
+                query["text"] = texto.Length >= 2000 ? texto.Substring(0, 2000) : texto;
+
+                builder.Query = query.ToString();
+
+                return builder.ToString();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }

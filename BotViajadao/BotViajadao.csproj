@@ -139,6 +139,7 @@
     <Compile Include="Model\Yelp\Localizacao.cs" />
     <Compile Include="Model\Yelp\RespostaBuscaYelp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ServicoAutenticacaoTraducao.cs" />
     <Compile Include="Services\ServicoBase.cs" />
     <Compile Include="Services\ServicoCotacao.cs" />
     <Compile Include="Services\ServicoReconhecimentoFala.cs" />

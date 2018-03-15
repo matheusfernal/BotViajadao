@@ -1,23 +1,19 @@
-﻿using BotViajadao.Model;
+﻿using BotViajadao.Dialogs;
+using BotViajadao.Model.Yelp;
 using System;
 using System.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
-using BotViajadao.Dialogs;
-using BotViajadao.Model.Yelp;
 
 namespace BotViajadao.Services
 {
     public class ServicoYelp : ServicoBase
     {
-        private readonly UriBuilder _builder;
-
         public ServicoYelp()
         {
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ConfigurationManager.AppSettings["YelpApiKey"]);
-            _builder = ConstruirUriBuilder(ConfigurationManager.AppSettings["YelpBaseUrl"]);
         }
 
         public async Task<RespostaBuscaYelp> BuscarItens(string cidade, EnumTipoBusca tipoBusca)
@@ -25,12 +21,14 @@ namespace BotViajadao.Services
             RespostaBuscaYelp resposta = null;
             try
             {
-                var query = HttpUtility.ParseQueryString(_builder.Query);
+                var builder = ConstruirUriBuilder(ConfigurationManager.AppSettings["YelpBaseUrl"]);
+
+                var query = HttpUtility.ParseQueryString(builder.Query);
                 query["categories"] = TipoBusca.CategoriaBuscaYelp(tipoBusca);
                 query["location"] = cidade;
-                _builder.Query = query.ToString();
+                builder.Query = query.ToString();
 
-                var url = _builder.ToString();
+                var url = builder.ToString();
 
                 var response = await _client.GetAsync(url);
                 if (response.IsSuccessStatusCode)
