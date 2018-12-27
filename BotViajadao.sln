@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotViajadao", "BotViajadao\BotViajadao.csproj", "{EEF020FC-A018-4F89-8B90-D0E050DDC389}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotViajadao_old", "BotViajadao\BotViajadao_old.csproj", "{EEF020FC-A018-4F89-8B90-D0E050DDC389}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotViajadao", "src\BotViajadao\BotViajadao.csproj", "{F6C54C0D-5DEF-4C7B-86F9-FC53A4D8CD2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{EEF020FC-A018-4F89-8B90-D0E050DDC389}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEF020FC-A018-4F89-8B90-D0E050DDC389}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEF020FC-A018-4F89-8B90-D0E050DDC389}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6C54C0D-5DEF-4C7B-86F9-FC53A4D8CD2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6C54C0D-5DEF-4C7B-86F9-FC53A4D8CD2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6C54C0D-5DEF-4C7B-86F9-FC53A4D8CD2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6C54C0D-5DEF-4C7B-86F9-FC53A4D8CD2B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
