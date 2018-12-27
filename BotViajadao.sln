@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotViajadao_old", "BotViaja
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotViajadao", "src\BotViajadao\BotViajadao.csproj", "{F6C54C0D-5DEF-4C7B-86F9-FC53A4D8CD2B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotViajadao.Model", "src\BotViajadao.Model\BotViajadao.Model.csproj", "{3B56585D-4555-4999-96CE-96E21077E4DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotViajadao.Util", "src\BotViajadao.Util\BotViajadao.Util.csproj", "{CBC7906E-0185-4ED5-B618-FE5A540F6268}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{F6C54C0D-5DEF-4C7B-86F9-FC53A4D8CD2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6C54C0D-5DEF-4C7B-86F9-FC53A4D8CD2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6C54C0D-5DEF-4C7B-86F9-FC53A4D8CD2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B56585D-4555-4999-96CE-96E21077E4DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B56585D-4555-4999-96CE-96E21077E4DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B56585D-4555-4999-96CE-96E21077E4DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B56585D-4555-4999-96CE-96E21077E4DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBC7906E-0185-4ED5-B618-FE5A540F6268}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBC7906E-0185-4ED5-B618-FE5A540F6268}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBC7906E-0185-4ED5-B618-FE5A540F6268}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBC7906E-0185-4ED5-B618-FE5A540F6268}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
